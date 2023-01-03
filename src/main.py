@@ -1,7 +1,10 @@
 from flask import Flask, send_file, request
+from flask_cors import CORS
 from pipelines import k
+import torch
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def indexPage():
@@ -14,6 +17,8 @@ def staticAssets(p):
 @app.route('/api/generate', methods=['POST'])
 def generate():
     res = request.json
+    if(res.get('seed')):
+        torch.manual_seed(res['seed'])
     if(res['flag'] == 'k'):
         return k(res['prompt'])
     else:
