@@ -1,6 +1,6 @@
 from flask import Flask, send_file, request
 from flask_cors import CORS
-from pipelines import k
+from pipelines import k, p
 import torch
 
 app = Flask(__name__)
@@ -22,7 +22,7 @@ def generate():
     if(res['flag'] == 'k'):
         return k(res['prompt'])
     else:
-        return res['prompt']+'测试测试测试测试'
+        return p(res['prompt'])
 
 if __name__ == '__main__':
-    app.run(port=8439, debug=True)
+    app.run(port=8439)
